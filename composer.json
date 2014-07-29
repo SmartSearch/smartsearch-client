@@ -1,0 +1,23 @@
+{
+    "name": "SmartSearch/SmartSearch-client",
+    "type": "library",
+    "description": "A Silex Service Provider for SmartSearch",
+    "keywords": ["silex", "Smartfp7", "smartsearch", "search"],
+    "license": "",
+    "authors": [
+        {
+            "name": "",
+            "email": "",
+            "homepage": ""
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "SmartSearch\\Service\\SmartSearch-client": "src"
+        }
+    },
+    "require": {
+        "php": ">=5.3.2",
+        "silex/silex": "~1.1"
+    }
+}
