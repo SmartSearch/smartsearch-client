@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartSearch\Composer;
+namespace smartsearch_client\Composer;
 
 class Script
 {

@@ -10,7 +10,7 @@
 * The Original Code is Copyright (c) 2012-2014 PRISA Digital
 * All Rights Reserved
 */
-namespace SmartSearch\Entity;
+namespace smartsearch_client\Entity;
 
 use DateTime;
 
@@ -541,4 +541,3 @@ class Latest {
       return null;
   }
 }
-

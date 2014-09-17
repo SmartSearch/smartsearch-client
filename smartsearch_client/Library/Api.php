@@ -10,7 +10,7 @@
 * The Original Code is Copyright (c) 2012-2014 PRISA Digital
 * All Rights Reserved
 */
-namespace SmartSearch;
+namespace smartsearch_client\Library;
 
 use Monolog\Logger;
 
@@ -105,9 +105,10 @@ class Api {
         $completeURL = $this->url. $this->searchMethod. "?". $query;
         $this->logger->info($context.' The search we are trying to execute is {completeURL}.', array("completeURL" => $completeURL));
         
-        #$response = $this->response = @file_get_contents($completeURL);
-        $response = file_get_contents('new_local_data.json');
-        
+        // LOCALE API
+        //$response = $this->response = @file_get_contents($completeURL);
+    	$response = $this->response = file_get_contents("new_local_data.json");
+
         if ($response !== false) {
             $data = @json_decode($response, true);
             if ($data !== false) {
