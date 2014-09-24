@@ -1,6 +1,6 @@
 {
     "name"        : "smartsearch/smartsearch_client",
-    "type"        : "project",
+    "type"        : "library",
     "description" : "Live news. Search view.",
     "keywords"    : ["smart", "smartfp7", "prisadigital", "livenews"],
     "homepage"    : "https://bitbucket.org/smartsearch/smartsearch-client",
@@ -19,4 +19,13 @@
         "php": ">=5.3.0",
         "smartsearch/smartsearch-client": "dev-master"
     },
+    "autoload": {
+        "psr-0": {"": ""}
+    },
+    "minimun-stabiliti": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
 }
