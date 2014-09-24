@@ -1,5 +1,6 @@
 {
     "name"        : "smartsearch/smartsearch_client",
+    "version"     : "v1.0.0",
     "type"        : "library",
     "description" : "Live news. Search view.",
     "keywords"    : ["smart", "smartfp7", "prisadigital", "livenews"],
@@ -22,7 +23,6 @@
     "autoload": {
         "psr-0": {"": ""}
     },
-    "minimun-stabiliti": "dev",
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"
