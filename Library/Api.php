@@ -10,7 +10,7 @@
 * The Original Code is Copyright (c) 2012-2014 PRISA Digital
 * All Rights Reserved
 */
-namespace Smartsearch\Library;
+namespace smartsearch_client\Library;
 
 use Monolog\Logger;
 

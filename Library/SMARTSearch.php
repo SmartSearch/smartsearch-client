@@ -15,7 +15,7 @@ namespace Smartsearch\Library;
 use DateTime;
 use Exception;
 use Monolog\Logger;
-use Smartsearch\Entity\Latest;
+use smartsearch_client\Entity\Latest;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
