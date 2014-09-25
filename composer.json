@@ -1,5 +1,5 @@
 {
-    "name"        : "smartsearch",
+    "name"        : "smartsearch\smartsearch_client",
     "version"     : "v1.0.0",
     "type"        : "library",
     "description" : "Live news. Search view.",
