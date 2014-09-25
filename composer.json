@@ -20,7 +20,7 @@
         "php": ">=5.3.0"
     },
     "autoload": {
-        "psr-0": {"smartsearch_client": ""}
+        "psr-0": {"smartsearch_client\\": ""}
     },
     "extra": {
         "branch-alias": {
