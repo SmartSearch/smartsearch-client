@@ -10,7 +10,7 @@
 * The Original Code is Copyright (c) 2012-2014 PRISA Digital
 * All Rights Reserved
 */
-namespace smartsearch_client\Entity;
+namespace Smartsearch\Entity;
 
 use DateTime;
 

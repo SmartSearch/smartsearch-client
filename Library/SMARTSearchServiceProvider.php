@@ -10,14 +10,14 @@
 * The Original Code is Copyright (c) 2012-2014 PRISA Digital
 * All Rights Reserved
 */
-namespace smartsearch_client\Library;
+namespace Smartsearch\Library;
 
 use DateTime;
 use Exception;
 use Monolog\Logger;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use smartsearch_client\Entity\Latest;
+use Smartsearch\Entity\Latest;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
