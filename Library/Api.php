@@ -104,10 +104,7 @@ class Api {
         
         $completeURL = $this->url. $this->searchMethod. "?". $query;
         $this->logger->info($context.' The search we are trying to execute is {completeURL}.', array("completeURL" => $completeURL));
-        
-        // LOCALE API
-        //$response = $this->response = @file_get_contents($completeURL);
-    	$response = $this->response = file_get_contents("new_local_data.json");
+        $response = $this->response = @file_get_contents($completeURL);
 
         if ($response !== false) {
             $data = @json_decode($response, true);
