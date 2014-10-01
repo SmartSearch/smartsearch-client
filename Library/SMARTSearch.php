@@ -41,7 +41,7 @@ class SMARTSearch {
     function __construct(Logger $logger, $url, $query_news=null, $query_weather=null) {
         $this->logger                = $logger;
         $this->url                   = $url;
-		$startDate                   = '2013-11-01';
+	$this->startDate             = '2013-11-01';
         $this->news_q                = $query_news;
         $this->weather_q             = $query_weather;
 		/*
