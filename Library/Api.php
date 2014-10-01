@@ -139,8 +139,6 @@ class Api {
             $option = explode("&", $option[1]);
             $data['results'][$i]['id'] = $option[0].'_'.$data['results'][$i]['id'];
 
-            //echo "<pre>query: ";print_r($query);echo "</pre><br>";
-
             if (isset($data['results'][$i]['observations']['topTweets'])){
                 // Update profile image and user
                 $data['results'][$i]['screenName'] = $data['results'][$i]['observations']['topTweets'][0]['user']['screen_name'];

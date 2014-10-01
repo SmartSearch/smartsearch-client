@@ -23,22 +23,24 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SMARTSearch {
     
-    protected $logger;
-    protected $url;
+	protected $logger;
+	protected $url;
 	protected $startDate;
-    protected $news_q;
-    protected $weather_q;
+	protected $news_q;
+	protected $weather_q;
 	protected $events_culture_q;
 	protected $events_traffic_q;
 	protected $events_sport_q;
 	protected $events_commerce_q;
-    protected $wheaterRequest;
+	protected $wheaterRequest;
+	protected $query_news;
+	protected $query_weather;
     
     /**
      * @param logger - Logger. Instance of the application's logger
 	 * @param url - String. URL for the SMART Search service
      */
-    function __construct(Logger $logger, $url) {
+    function __construct(Logger $logger, $url, $query_news=null, $query_weather=null) {
         $this->logger                = $logger;
         $this->url                   = $url;
 		$startDate                   = '2013-11-01';
@@ -49,10 +51,13 @@ class SMARTSearch {
 		*/
         $this->news_query            = 'search.json?q=santander';
         $this->weather_query         = 'search.json=q=crowd';
-		$this->events_culture_query  = 'predefined.json?c=cult';
-		$this->events_traffic_query  = 'predefined.json?c=traffic';
-		$this->events_sport_query    = 'predefined.json?c=sport';
-		$this->events_commerce_query = 'predefined.json?c=commerce';
+        $this->events_culture_query  = 'predefined.json?c=cult';
+	   $this->events_traffic_query  = 'predefined.json?c=traffic';
+	   $this->events_sport_query    = 'predefined.json?c=sport';
+	   $this->events_commerce_query = 'predefined.json?c=commerce';
+
+        if (!is_null($query_news)) $this->query_news = $query_news;
+        if (!is_null($query_weather)) $this->query_weather = $query_weather;
     }
 
     /**
@@ -117,7 +122,7 @@ class SMARTSearch {
         $api->setQueryParams($params);
         
         try {
-            $result = $api->request();
+            $result = $api->search();
             $this->wheaterRequest = $api->getResponse();
             
             if (!$api->isSuccess()) {

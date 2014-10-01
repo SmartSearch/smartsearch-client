@@ -24,7 +24,6 @@ use Symfony\Component\HttpFoundation\Response;
  *
  */
 class SMARTSearchServiceProvider implements ServiceProviderInterface {
-
 	/**
 	 *
 	 * @param Application app
@@ -37,12 +36,17 @@ class SMARTSearchServiceProvider implements ServiceProviderInterface {
 	 * @param Application app
 	 */
     public function register(Application $app) {
+        if ( !isset($app['smart.url']) or empty($app['smart.url']) )
+    		$app['smart.url'] = 'http://demos.terrier.org/v1/';
+
         $this->app = $app;
         
         $app['smart'] = $app->share(function ($name) use ($app) {
             return new SMARTSearch(
 				$app['logger'], 
-				$app['smart.url']
+				$app['smart.url'],
+				$app['smart.query_news'],
+				$app['smart.query_weather']
                 );
         });        
     }
