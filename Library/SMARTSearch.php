@@ -33,8 +33,6 @@ class SMARTSearch {
 	protected $events_sport_q;
 	protected $events_commerce_q;
 	protected $wheaterRequest;
-	protected $query_news;
-	protected $query_weather;
     
     /**
      * @param logger - Logger. Instance of the application's logger
@@ -44,6 +42,8 @@ class SMARTSearch {
         $this->logger                = $logger;
         $this->url                   = $url;
 		$startDate                   = '2013-11-01';
+        $this->news_q                = $query_news;
+        $this->weather_q             = $query_weather;
 		/*
 		Here is where we define the API to use the SMART Search service
 		Detailed documentation about this API is
@@ -52,13 +52,13 @@ class SMARTSearch {
         $this->news_query            = 'search.json?q=santander';
         $this->weather_query         = 'search.json=q=crowd';
         $this->events_culture_query  = 'predefined.json?c=cult';
-	   $this->events_traffic_query  = 'predefined.json?c=traffic';
-	   $this->events_sport_query    = 'predefined.json?c=sport';
-	   $this->events_commerce_query = 'predefined.json?c=commerce';
+        $this->events_traffic_query  = 'predefined.json?c=traffic';
+        $this->events_sport_query    = 'predefined.json?c=sport';
+        $this->events_commerce_query = 'predefined.json?c=commerce';
 
         // if exists query_news or query_weather, set values
-	if (!is_null($query_news)) $this->query_news = $query_news;
-        if (!is_null($query_weather)) $this->query_weather = $query_weather;
+        if ( !is_null($query_news) ) $this->news_query = 'search.json?q=' . $query_news;
+        if ( !is_null($query_weather) ) $this->weather_query = 'search.json?q=' . $query_weather;
     }
 
     /**
