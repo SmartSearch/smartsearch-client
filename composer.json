@@ -4,7 +4,7 @@
     "type"        : "library",
     "description" : "Live news. Search view.",
     "keywords"    : ["smart", "smartfp7", "prisadigital", "livenews"],
-    "homepage"    : "https://bitbucket.org/smartsearch/smartsearch-client",
+    "homepage"    : "https://github.com/SmartSearch/smartsearch-client.git",
     "license"     : "MPL 2.0",
     "authors"     : [
         {
