@@ -19,9 +19,9 @@ use Monolog\Logger;
  */
 class Api {
 
-	protected $logger;
-	protected $searchMethod;
-	protected $eventsMethod;
+    protected $logger;
+    protected $searchMethod;
+    protected $eventsMethod;
     protected $url;
     protected $queryParams;  
     protected $response;

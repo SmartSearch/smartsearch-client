@@ -56,7 +56,8 @@ class SMARTSearch {
 	   $this->events_sport_query    = 'predefined.json?c=sport';
 	   $this->events_commerce_query = 'predefined.json?c=commerce';
 
-        if (!is_null($query_news)) $this->query_news = $query_news;
+        // if exists query_news or query_weather, set values
+	if (!is_null($query_news)) $this->query_news = $query_news;
         if (!is_null($query_weather)) $this->query_weather = $query_weather;
     }
 

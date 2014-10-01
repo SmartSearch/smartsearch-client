@@ -36,7 +36,8 @@ class SMARTSearchServiceProvider implements ServiceProviderInterface {
 	 * @param Application app
 	 */
     public function register(Application $app) {
-        if ( !isset($app['smart.url']) or empty($app['smart.url']) )
+        // if nos exists an url, set default smart url
+	if ( !isset($app['smart.url']) or empty($app['smart.url']) )
     		$app['smart.url'] = 'http://demos.terrier.org/v1/';
 
         $this->app = $app;
