@@ -10,6 +10,7 @@
 * The Original Code is Copyright (c) 2012-2014 PRISA Digital
 * All Rights Reserved
 */
+
 namespace smartsearch_client\Controllers;
 
 use Silex\Application;
@@ -22,7 +23,7 @@ class SMARTSearchController {
 	 * @param Request request
 	 * @param Application app
 	 */
-    public function indexAction(Request $request, Application $app) {
+    /*public function indexAction(Request $request, Application $app) {
         
         $smart = $app['smart'];
         
@@ -37,14 +38,14 @@ class SMARTSearchController {
             'search'    => $smart->search(''),
         );
        return $app['twig']->render('index.html.twig', $data);
-    }
+    }*/
     
 	/*
 	 *
 	 * @param Request request
 	 * @param Application app
 	 */
-    public function queryAction(Request $request, Application $app) {
+    /*public function queryAction(Request $request, Application $app) {
         $query  = $request->query->get('query');
         $origen = $request->query->get('origen');
     	$since = $request->query->get('since');
@@ -62,12 +63,12 @@ class SMARTSearchController {
     		'search' => $smart->search($query, $lat, $lon, $since),
         );
        return $app['twig']->render('query.html.twig', $data);
-    }
+    }*/
     
 	/*
 	 *
 	 */
-    private function getFixDataColor() {
+    /*private function getFixDataColor() {
         return array(
             array(
                 'icono' => './img/crowd.png',
@@ -85,5 +86,5 @@ class SMARTSearchController {
                 'autor'     => 'Ayer'
             ),
         );
-    }
+    }*/
 }
