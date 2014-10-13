@@ -89,20 +89,24 @@ class Api {
     public function isSuccess() {
         return $this->success;
     }
-    
+
+
    /**
     * Executes a search against the SMART Search service
 	* @throws Exception
     */
     public function search() {
 		$context = 'Api.search';
-		$this->logger->info($context.
-		    ' Trying to execute a search using the SMART Search API');
+		$this->logger->info($context.' Trying to execute a search using the SMART Search API');
         
 		$this->success = false;
         $query = http_build_query($this->getQueryParams());
-        
-        $completeURL = $this->url. $this->searchMethod. "?". $query;
+
+        if ( strstr($query,"q=") )
+            $completeURL = $this->url. $this->searchMethod. "?". $query;
+        else
+            $completeURL = $this->url. $this->eventsMethod. "?". $query;
+echo "<pre>completeURL: ";print_r($completeURL);echo "</pre><br>";
         $this->logger->info($context.' The search we are trying to execute is {completeURL}.', array("completeURL" => $completeURL));
         $response = $this->response = @file_get_contents($completeURL);
 
