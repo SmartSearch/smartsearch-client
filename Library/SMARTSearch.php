@@ -72,7 +72,7 @@ class SMARTSearch {
 		$this->logger->info($context.' Trying to get the Today news.');
 
         $api    = $this->getSearchApi();
-        $api->setQueryParams(array("q" => $this->news_q, "since" => date('Y-m-d')));
+        $api->setQueryParams(array("q" => $this->news_query, "since" => date('Y-m-d')));
         
         try {
 			$result = $api->search();
@@ -118,7 +118,7 @@ class SMARTSearch {
      */
     public function weather() {
         $data = array();
-        $params =  array('q' => $this->weather_q, "since"=>date('Y-m-d'));
+        $params =  array('q' => $this->weather_query, "since"=>date('Y-m-d'));
         $api = $this->getSearchApi();
         $api->setQueryParams($params);
         
