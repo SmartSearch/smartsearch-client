@@ -37,17 +37,22 @@ class SMARTSearchServiceProvider implements ServiceProviderInterface {
 	 */
     public function register(Application $app) {
         // if nos exists an url, set default smart url
-	if ( !isset($app['smart.url']) or empty($app['smart.url']) )
+		if ( !isset($app['smart.url']) or empty($app['smart.url']) )
     		$app['smart.url'] = 'http://demos.terrier.org/v1/';
 
+		if ( !isset($app['smart.query_news']) ) $app['smart.query_news'] = null;
+	    if ( !isset($app['smart.query_weather']) ) $app['smart.query_weather'] = null;
+	    if ( !isset($app['smart.startDate']) ) $app['smart.startDate'] = null;
+
         $this->app = $app;
-        
+
         $app['smart'] = $app->share(function ($name) use ($app) {
             return new SMARTSearch(
 				$app['logger'], 
 				$app['smart.url'],
 				$app['smart.query_news'],
-				$app['smart.query_weather']
+				$app['smart.query_weather'],
+				$app['smart.startDate']
                 );
         });        
     }

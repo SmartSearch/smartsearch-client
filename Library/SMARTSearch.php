@@ -24,41 +24,41 @@ use Symfony\Component\HttpFoundation\Response;
 class SMARTSearch {
     
 	protected $logger;
-	protected $url;
-	protected $startDate;
-	protected $news_q;
-	protected $weather_q;
-	protected $events_culture_q;
-	protected $events_traffic_q;
-	protected $events_sport_q;
-	protected $events_commerce_q;
-	protected $wheaterRequest;
+    protected $url;
+    protected $startDate;
+    protected $news_query;
+    protected $weather_query;
+    protected $events_culture_query;
+    protected $events_traffic_query;
+    protected $events_sport_query;
+    protected $events_commerce_query;
+    protected $wheaterRequest;
     
     /**
+     *   Here is where we define the API to use the SMART Search service
+     *   Detailed documentation about this API is
+     *   in http://opensoftware.smartfp7.eu/projects/smart/wiki/SearchApi
+     *   
      * @param logger - Logger. Instance of the application's logger
-	 * @param url - String. URL for the SMART Search service
+     * @param url - String. URL for the SMART Search service
+     * @param query_news - String. Set a place to search
+     * @param query_weather - String. Set a weather condition
+     * @param startDate - Date. Set init date to search
      */
-    function __construct(Logger $logger, $url, $query_news=null, $query_weather=null) {
-        $this->logger                = $logger;
-        $this->url                   = $url;
-	$this->startDate             = '2013-11-01';
-        $this->news_q                = $query_news;
-        $this->weather_q             = $query_weather;
-		/*
-		Here is where we define the API to use the SMART Search service
-		Detailed documentation about this API is
-		in http://opensoftware.smartfp7.eu/projects/smart/wiki/SearchApi
-		*/
-        $this->news_query            = 'search.json?q=santander';
-        $this->weather_query         = 'search.json=q=crowd';
+    function __construct(Logger $logger, $url, $query_news=null, $query_weather=null, $startDate=null) {
+        $this->weather_query         = 'search.json?q=crowd';
         $this->events_culture_query  = 'predefined.json?c=cult';
         $this->events_traffic_query  = 'predefined.json?c=traffic';
         $this->events_sport_query    = 'predefined.json?c=sport';
         $this->events_commerce_query = 'predefined.json?c=commerce';
 
-        // if exists query_news or query_weather, set values
-        if ( !is_null($query_news) ) $this->news_query = 'search.json?q=' . $query_news;
-        if ( !is_null($query_weather) ) $this->weather_query = 'search.json?q=' . $query_weather;
+        $this->logger                = $logger;
+        $this->url                   = $url;
+
+        $this->startDate = ( !is_null($startDate) ) ? $startDate : date("Y-m-d", strtotime("-15 day"));
+        $this->news_query = ( !is_null($query_news) ) ? 'search.json?q='.$query_news : null;
+        $this->weather_query = ( !is_null($query_weather) ) ? 'search.json?q='.$query_weather : null;
+
     }
 
     /**
