@@ -46,19 +46,21 @@ class SMARTSearch {
      * @param startDate - Date. Set init date to search
      */
     function __construct(Logger $logger, $url, $query_news=null, $query_weather=null, $startDate=null) {
-        $this->weather_query         = 'search.json?q=crowd';
+        //$this->weather_query         = 'search.json?q=crowd';
         //$this->events_culture_query  = 'predefined.json?c=cult';
+
+        $this->weather_query         = 'crowd';        
         $this->events_culture_query  = 'cult';
-        $this->events_traffic_query  = 'predefined.json?c=traffic';
-        $this->events_sport_query    = 'predefined.json?c=sport';
-        $this->events_commerce_query = 'predefined.json?c=commerce';
+        $this->events_traffic_query  = 'traffic';
+        $this->events_sport_query    = 'sport';
+        $this->events_commerce_query = 'commerce';
 
         $this->logger                = $logger;
         $this->url                   = $url;
 
         $this->startDate = ( !is_null($startDate) ) ? $startDate : date("Y-m-d", strtotime("-15 day"));
-        $this->news_query = ( !is_null($query_news) ) ? 'search.json?q='.$query_news : null;
-        $this->weather_query = ( !is_null($query_weather) ) ? 'search.json?q='.$query_weather : null;
+        $this->news_query = ( !is_null($query_news) ) ? $query_news : null;
+        $this->weather_query = ( !is_null($query_weather) ) ? $query_weather : null;
 
     }
 
@@ -136,13 +138,14 @@ class SMARTSearch {
         return $result;        
     }
 
+    
     /**
      *
      * @throws Exception
      */
-    public function culture() {
+    public function sport() {
         $data = array();
-        $params =  array('c' => $this->events_culture_query);
+        $params =  array('c' => $this->events_sport_query, "since" => $this->startDate);
         $api = $this->getSearchApi();
         $api->setQueryParams($params);
 
@@ -151,23 +154,142 @@ class SMARTSearch {
             if (!$api->isSuccess()) {
                 throw new Exception(' URL: '.$api->getCompleteUrl());
             }
-
             if (isset($result['results'])) {
-                $data = $this->transform_result($result);
+                $data = $this->getInformationResult($result);
             }
         } catch(Exception $e) {
            $this->logger->error($e->getMessage());
         }
-
         return $data;        
     }
 
 
     /**
+     *
+     * @throws Exception
+     */
+    public function commerce() {
+        $data = array();
+        $params =  array('c' => $this->events_commerce_query, "since" => $this->startDate);
+        $api = $this->getSearchApi();
+        $api->setQueryParams($params);
+
+        try {
+            $result = $api->search();
+            if (!$api->isSuccess()) {
+                throw new Exception(' URL: '.$api->getCompleteUrl());
+            }
+            if (isset($result['results'])) {
+                $data = $this->getInformationResult($result);
+            }
+        } catch(Exception $e) {
+           $this->logger->error($e->getMessage());
+        }
+        return $data;        
+    }
+
+
+    /**
+     *
+     * @throws Exception
+     */
+    public function culture() {
+        $data = array();
+        $params =  array('c' => $this->events_culture_query, "since" => $this->startDate);
+        $api = $this->getSearchApi();
+        $api->setQueryParams($params);
+
+        try {
+            $result = $api->search();
+            if (!$api->isSuccess()) {
+                throw new Exception(' URL: '.$api->getCompleteUrl());
+            }
+            if (isset($result['results'])) {
+                $data = $this->getInformationResult($result);
+            }
+        } catch(Exception $e) {
+           $this->logger->error($e->getMessage());
+        }
+        return $data;        
+    }
+
+
+    /**
+     *
+     * @throws Exception
+     */
+    public function traffic() {
+        $data = array();
+        $params =  array('c' => $this->events_traffic_query, "since" => $this->startDate);
+        $api = $this->getSearchApi();
+        $api->setQueryParams($params);
+
+        try {
+            $result = $api->search();
+            if (!$api->isSuccess()) {
+                throw new Exception(' URL: '.$api->getCompleteUrl());
+            }
+            if (isset($result['results'])) {
+                $data = $this->getInformationResult($result);
+            }
+        } catch(Exception $e) {
+           $this->logger->error($e->getMessage());
+        }
+        return $data;        
+    }
+
+   
+    /**
+     * 
+     * @param string query
+	 * @param float lat
+	 * @param float lon
+     * @param date since
+     * @return array Latest
+     * @throws Exception
+     */
+    public function search($query, $lat=null, $lon=null, $since=null) {
+        
+        $data = array();
+        $params =  array("q"=>$query, "since"=>$since);
+
+        if (!is_null($lat) && !is_null($lon)) {
+            $params = array_merge($params, array('lat' => $lat, 'lon' => $lon));
+        }
+        $api = $this->getSearchApi();
+        $api->setQueryParams($params);
+
+		try {
+			$result = $api->search();
+			if (!$api->isSuccess()) {
+				throw new Exception(' Fail request from WebService ');
+			} 
+			if (isset($result['results'])) {
+				$data = $this->getInformationResult($result);
+			}
+		} catch(Exception $e) {
+			$this->logger->error($e->getMessage());
+		}
+		return $data;
+    }
+    
+    /**
+     *
+	 * @return Api
+     */
+    private function getSearchApi() {
+        static $api;
+        if (is_null($api)) {
+            $api = new Api($this->logger, $this->url);
+        }
+        return $api;
+    }
+
+        /**
     * Transform result on data values
     * @param array result
     */
-    public function transform_result($result) {
+    public function getInformationResult($result) {
         foreach ($result['results'] as $elem) {
             $data[] = new Latest(
                     $elem['id'], 
@@ -197,74 +319,4 @@ class SMARTSearch {
         return $data;
     }
 
-    
-    /**
-     * 
-     * @param string query
-	 * @param float lat
-	 * @param float lon
-     * @param date since
-     * @return array Latest
-     * @throws Exception
-     */
-    public function search($query, $lat=null, $lon=null, $since=null) {
-        
-        $data = array();
-        $params =  array("q"=>$query, "since"=>$since);
-
-        if (!is_null($lat) && !is_null($lon)) {
-            $params = array_merge($params, array('lat' => $lat, 'lon' => $lon));
-        }
-        $api = $this->getSearchApi();
-        $api->setQueryParams($params);
-
-		try {
-			$result = $api->search();
-			if (!$api->isSuccess()) {
-				throw new Exception(' Fail request from WebService ');
-			} 
-			if (isset($result['results'])) {
-				foreach ($result['results'] as $elem) {
-					$data[] = new Latest(
-							$elem['id'], 
-							new DateTime($elem['startTime']), 
-							$elem['activity'], 
-							$elem['locationId'], 
-							$elem['locationName'], 
-							$elem['locationAddress'], 
-							$elem['observations'], 
-							$elem['latestObservations'], 
-							$elem['media'], 
-							$elem['lat'], 
-							$elem['lon'], 
-							$elem['rank'], 
-							$elem['score'], 
-							$elem['description'], 
-							$elem['URI'], 
-							$elem['title'], 
-							$elem['geohash'], 
-							$elem['lorder'], 
-							$elem['triggers'],
-                            $elem['profileImageUrl'],
-                            $elem['screenName']
-					);
-				}
-			}
-		} catch(Exception $e) {
-			$this->logger->error($e->getMessage());
-		}
-		return $data;
-    }
-    
-    /**
-     *
-	 * @return Api
-     */
-    private function getSearchApi() {
-        static $api;
-        if (is_null($api)) {
-            $api = new Api($this->logger, $this->url);
-        }
-        return $api;
-    }
 }

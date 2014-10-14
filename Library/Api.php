@@ -21,7 +21,7 @@ class Api {
 
     protected $logger;
     protected $searchMethod;
-    protected $eventsMethod;
+    protected $predefinedSearch;
     protected $url;
     protected $queryParams;  
     protected $response;
@@ -37,7 +37,7 @@ class Api {
 		$this->url         = $url;
 		
 		$this->searchMethod = 'search.json';
-		$this->eventsMethod = 'predefined.json';
+		$this->predefinedSearch = 'predefined.json';
         $this->success      = false;
     }
     
@@ -105,8 +105,8 @@ class Api {
         if ( strstr($query,"q=") )
             $completeURL = $this->url. $this->searchMethod. "?". $query;
         else
-            $completeURL = $this->url. $this->eventsMethod. "?". $query;
-echo "<pre>completeURL: ";print_r($completeURL);echo "</pre><br>";
+            $completeURL = $this->url. $this->predefinedSearch. "?". $query;
+
         $this->logger->info($context.' The search we are trying to execute is {completeURL}.', array("completeURL" => $completeURL));
         $response = $this->response = @file_get_contents($completeURL);
 
