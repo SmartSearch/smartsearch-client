@@ -47,7 +47,8 @@ class SMARTSearch {
      */
     function __construct(Logger $logger, $url, $query_news=null, $query_weather=null, $startDate=null) {
         $this->weather_query         = 'search.json?q=crowd';
-        $this->events_culture_query  = 'predefined.json?c=cult';
+        //$this->events_culture_query  = 'predefined.json?c=cult';
+        $this->events_culture_query  = 'cult';
         $this->events_traffic_query  = 'predefined.json?c=traffic';
         $this->events_sport_query    = 'predefined.json?c=sport';
         $this->events_commerce_query = 'predefined.json?c=commerce';
@@ -134,6 +135,68 @@ class SMARTSearch {
         }
         return $result;        
     }
+
+    /**
+     *
+     * @throws Exception
+     */
+    public function culture() {
+        $data = array();
+        $params =  array('c' => $this->events_culture_query);
+        $api = $this->getSearchApi();
+        $api->setQueryParams($params);
+
+        try {
+            $result = $api->search();
+            if (!$api->isSuccess()) {
+                throw new Exception(' URL: '.$api->getCompleteUrl());
+            }
+
+            if (isset($result['results'])) {
+                $data = $this->transform_result($result);
+            }
+        } catch(Exception $e) {
+           $this->logger->error($e->getMessage());
+        }
+
+        return $data;        
+    }
+
+
+    /**
+    * Transform result on data values
+    * @param array result
+    */
+    public function transform_result($result) {
+        foreach ($result['results'] as $elem) {
+            $data[] = new Latest(
+                    $elem['id'], 
+                    new DateTime($elem['startTime']), 
+                    $elem['activity'], 
+                    $elem['locationId'], 
+                    $elem['locationName'], 
+                    $elem['locationAddress'], 
+                    $elem['observations'], 
+                    $elem['latestObservations'], 
+                    $elem['media'], 
+                    $elem['lat'], 
+                    $elem['lon'], 
+                    $elem['rank'], 
+                    $elem['score'], 
+                    $elem['description'], 
+                    $elem['URI'], 
+                    $elem['title'], 
+                    $elem['geohash'], 
+                    $elem['lorder'], 
+                    $elem['triggers'],
+                    $elem['profileImageUrl'],
+                    $elem['screenName']
+            );
+        }
+
+        return $data;
+    }
+
     
     /**
      * 
@@ -145,15 +208,16 @@ class SMARTSearch {
      * @throws Exception
      */
     public function search($query, $lat=null, $lon=null, $since=null) {
+        
         $data = array();
         $params =  array("q"=>$query, "since"=>$since);
-        
+
         if (!is_null($lat) && !is_null($lon)) {
             $params = array_merge($params, array('lat' => $lat, 'lon' => $lon));
         }
         $api = $this->getSearchApi();
         $api->setQueryParams($params);
-        
+
 		try {
 			$result = $api->search();
 			if (!$api->isSuccess()) {
@@ -185,7 +249,6 @@ class SMARTSearch {
                             $elem['screenName']
 					);
 				}
-
 			}
 		} catch(Exception $e) {
 			$this->logger->error($e->getMessage());
