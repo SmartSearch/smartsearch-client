@@ -120,7 +120,7 @@ class SMARTSearch {
 	 * @throws Exception
      */
     public function weather() {
-        $data = array();
+        $result = null;
         $params =  array('q' => $this->weather_query, "since"=>date('Y-m-d'));
         $api = $this->getSearchApi();
         $api->setQueryParams($params);
@@ -249,7 +249,6 @@ class SMARTSearch {
      * @throws Exception
      */
     public function search($query, $lat=null, $lon=null, $since=null) {
-        
         $data = array();
         $params =  array("q"=>$query, "since"=>$since);
 
@@ -290,6 +289,7 @@ class SMARTSearch {
     * @param array result
     */
     public function getInformationResult($result) {
+        $data = array();
         foreach ($result['results'] as $elem) {
             $data[] = new Latest(
                     $elem['id'], 
