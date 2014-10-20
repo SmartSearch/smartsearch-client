@@ -43,9 +43,9 @@ class SMARTSearch {
      * @param url - String. URL for the SMART Search service
      * @param query_news - String. Set a place to search
      * @param query_weather - String. Set a weather condition
-     * @param startDate - Date. Set init date to search
+     * @param days2Include - Int. Days since do the search.
      */
-    function __construct(Logger $logger, $url, $query_news=null, $query_weather=null, $startDate=null) {
+    function __construct(Logger $logger, $url, $query_news=null, $query_weather=null, $days2Include=null) {
         //$this->weather_query         = 'search.json?q=crowd';
         //$this->events_culture_query  = 'predefined.json?c=cult';
 
@@ -58,7 +58,7 @@ class SMARTSearch {
         $this->logger                = $logger;
         $this->url                   = $url;
 
-        $this->startDate = ( !is_null($startDate) ) ? $startDate : date("Y-m-d", strtotime("-15 day"));
+        $this->startDate = ( !is_null($days2Include) ) ? date("Y-m-d", strtotime("-".$days2Include." day")) : date("Y-m-d", strtotime("-15 day"));
         $this->news_query = ( !is_null($query_news) ) ? $query_news : null;
         $this->weather_query = ( !is_null($query_weather) ) ? $query_weather : null;
 

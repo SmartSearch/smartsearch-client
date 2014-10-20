@@ -42,7 +42,7 @@ class SMARTSearchServiceProvider implements ServiceProviderInterface {
 
 		if ( !isset($app['smart.query_news']) ) $app['smart.query_news'] = null;
 	    if ( !isset($app['smart.query_weather']) ) $app['smart.query_weather'] = null;
-	    if ( !isset($app['smart.startDate']) ) $app['smart.startDate'] = null;
+	    if ( !isset($app['smart.days2Include']) ) $app['smart.days2Include'] = null;
 
         $this->app = $app;
 
@@ -52,7 +52,7 @@ class SMARTSearchServiceProvider implements ServiceProviderInterface {
 				$app['smart.url'],
 				$app['smart.query_news'],
 				$app['smart.query_weather'],
-				$app['smart.startDate']
+				$app['smart.days2Include']
                 );
         });        
     }
